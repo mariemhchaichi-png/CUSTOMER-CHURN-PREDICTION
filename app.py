@@ -51,21 +51,19 @@ with st.sidebar:
     )
 
 
-    st.subheader("Model")
-
-    st.write(
-        "Logistic Regression"
-    )
+    st.subheader("Model Information")
 
 
-    st.subheader("Accuracy")
+    with open("model_info.txt", "r") as file:
 
-    st.write(
-        "78.5%"
-    )
+        info = file.read()
+
+
+    st.text(info)
 
 
     st.subheader("Technologies")
+
 
     st.write(
         """
@@ -77,6 +75,7 @@ with st.sidebar:
     )
 
 
+    st.divider()
 # -------------------------
 # Dataset Overview
 # -------------------------

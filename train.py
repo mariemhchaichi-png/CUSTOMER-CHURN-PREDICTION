@@ -1,29 +1,39 @@
 import pandas as pd
-import pickle
 
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 
-from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 
+from sklearn.compose import ColumnTransformer
 
-# Load data
+from sklearn.pipeline import Pipeline
+
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report
+)
+
+from sklearn.linear_model import LogisticRegression
+
+from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.tree import DecisionTreeClassifier
+
+import pickle
+
+
+
+# -------------------------
+# Load dataset
+# -------------------------
 
 df = pd.read_csv(
     "data/customer_churn.csv"
 )
 
 
-# Cleaning
 
-df["TotalCharges"] = pd.to_numeric(
-    df["TotalCharges"],
-    errors="coerce"
-)
-
-df = df.dropna()
-
+# Remove customer ID
 
 df = df.drop(
     "customerID",
@@ -32,13 +42,34 @@ df = df.drop(
 
 
 
+# Convert TotalCharges
+
+df["TotalCharges"] = pd.to_numeric(
+    df["TotalCharges"],
+    errors="coerce"
+)
+
+
+
+df = df.dropna()
+
+
+
+# -------------------------
+# Features / Target
+# -------------------------
+
 X = df.drop(
     "Churn",
     axis=1
 )
 
 
-y = df["Churn"].map(
+y = df["Churn"]
+
+
+
+y = y.map(
     {
         "Yes":1,
         "No":0
@@ -47,20 +78,28 @@ y = df["Churn"].map(
 
 
 
-# Separate columns
+# -------------------------
+# Columns
+# -------------------------
 
-categorical = X.select_dtypes(
-    include="object"
-).columns
+numeric_features = [
+    "SeniorCitizen",
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges"
+]
 
 
-numeric = X.select_dtypes(
-    exclude="object"
-).columns
+categorical_features = [
+    col for col in X.columns
+    if col not in numeric_features
+]
 
 
 
+# -------------------------
 # Preprocessing
+# -------------------------
 
 preprocessor = ColumnTransformer(
     transformers=[
@@ -69,7 +108,7 @@ preprocessor = ColumnTransformer(
             OneHotEncoder(
                 handle_unknown="ignore"
             ),
-            categorical
+            categorical_features
         )
     ],
     remainder="passthrough"
@@ -77,31 +116,35 @@ preprocessor = ColumnTransformer(
 
 
 
-# Model
+# -------------------------
+# Models
+# -------------------------
 
-model = LogisticRegression(
-    max_iter=1000
-)
+models = {
+
+"Logistic Regression":
+    LogisticRegression(
+        max_iter=1000
+    ),
+
+"Random Forest":
+    RandomForestClassifier(
+        n_estimators=100,
+        random_state=42
+    ),
+
+"Decision Tree":
+    DecisionTreeClassifier(
+        random_state=42
+    )
+
+}
 
 
 
-from sklearn.pipeline import Pipeline
-
-
-pipeline = Pipeline(
-    steps=[
-        (
-            "preprocessor",
-            preprocessor
-        ),
-        (
-            "model",
-            model
-        )
-    ]
-)
-
-
+# -------------------------
+# Split data
+# -------------------------
 
 X_train, X_test, y_train, y_test = train_test_split(
     X,
@@ -112,30 +155,84 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 
 
-pipeline.fit(
-    X_train,
-    y_train
-)
+best_model = None
+best_score = 0
 
 
 
-accuracy = pipeline.score(
-    X_test,
-    y_test
-)
+# -------------------------
+# Training
+# -------------------------
+
+for name, model in models.items():
 
 
-print(
-    "Accuracy:",
-    accuracy
-)
+    pipeline = Pipeline(
+        steps=[
+            (
+                "preprocessor",
+                preprocessor
+            ),
+            (
+                "model",
+                model
+            )
+        ]
+    )
+
+
+    pipeline.fit(
+        X_train,
+        y_train
+    )
+
+
+    prediction = pipeline.predict(
+        X_test
+    )
+
+
+    accuracy = accuracy_score(
+        y_test,
+        prediction
+    )
+
+
+    print(
+        "\n",
+        name
+    )
+
+
+    print(
+        "Accuracy:",
+        accuracy
+    )
+
+
+    print(
+        classification_report(
+            y_test,
+            prediction
+        )
+    )
 
 
 
-# Save complete pipeline
+    if accuracy > best_score:
+
+        best_score = accuracy
+
+        best_model = pipeline
+
+
+
+# -------------------------
+# Save best model
+# -------------------------
 
 pickle.dump(
-    pipeline,
+    best_model,
     open(
         "model.pkl",
         "wb"
@@ -143,6 +240,13 @@ pickle.dump(
 )
 
 
+
 print(
-    "Pipeline saved!"
+    "\nBest model saved!"
+)
+
+
+print(
+    "Best accuracy:",
+    best_score
 )
