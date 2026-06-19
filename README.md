@@ -1,26 +1,33 @@
 # 🤖 Customer Churn Prediction
 
-## Project Overview
+##  Project Overview
 
-Customer Churn Prediction is a Machine Learning project that aims to predict whether a customer is likely to leave a company.
+Customer Churn Prediction is a Machine Learning project that predicts whether a customer is likely to leave a company.
 
-This project implements a complete Machine Learning workflow, from data preprocessing and model training to model evaluation and deployment through a Streamlit web application.
+The project covers the complete Machine Learning workflow:
 
-The goal is to help companies identify customers at risk of leaving and take preventive actions.
+- Data loading and cleaning
+- Feature preparation
+- Categorical data encoding
+- Model training
+- Model comparison
+- Model evaluation
+- Model deployment using Streamlit
+
+The objective is to help companies identify customers at risk of churn and take preventive actions.
 
 ---
 
 ## Objectives
 
-The main objectives of this project are:
+The main goals of this project are:
 
-- Analyze customer data
-- Clean and prepare the dataset
-- Transform categorical variables into numerical features
-- Train multiple Machine Learning models
+- Analyze customer behavior data
+- Prepare data for Machine Learning
+- Train different classification algorithms
 - Compare model performances
-- Select the best performing model
-- Deploy an interactive prediction application
+- Select the best model
+- Create an interactive prediction application
 
 ---
 
@@ -52,7 +59,7 @@ Model Evaluation
 Best Model Selection
    |
    v
-Streamlit Prediction App
+Streamlit Application
 ```
 
 ---
@@ -63,7 +70,7 @@ Streamlit Prediction App
 CUSTOMER-CHURN-PREDICTION
 
 │
-├── data
+├── data/
 │   └── customer_churn.csv
 │
 ├── train.py
@@ -81,7 +88,7 @@ CUSTOMER-CHURN-PREDICTION
 
 ---
 
-## Technologies Used
+## 🛠️ Technologies Used
 
 - Python
 - Pandas
@@ -92,16 +99,18 @@ CUSTOMER-CHURN-PREDICTION
 
 ---
 
-## 📊 Dataset
+##  Dataset
 
-The dataset contains customer information such as:
+The dataset contains customer information:
 
-- Customer demographics
-- Services used
-- Contract information
+- Demographic information
+- Services subscribed
+- Contract type
 - Payment method
-- Monthly and total charges
-- Churn status
+- Monthly charges
+- Total charges
+- Customer churn status
+
 
 Dataset size:
 
@@ -119,17 +128,18 @@ Values:
 
 ```
 Yes → Customer leaves
-No  → Customer stays
+
+No → Customer stays
 ```
 
 ---
 
-## 🤖 Machine Learning Models
+#  Machine Learning Models
 
-Three classification models were trained and compared:
+Three classification models were trained:
 
 | Model | Accuracy |
-|------|----------|
+|---|---|
 | Logistic Regression | 78.46% |
 | Random Forest | 78.03% |
 | Decision Tree | 71.14% |
@@ -140,7 +150,7 @@ The best model selected:
 Logistic Regression
 ```
 
-The complete trained pipeline is saved as:
+The complete trained pipeline is saved in:
 
 ```
 model.pkl
@@ -154,22 +164,55 @@ The saved pipeline contains:
 
 ---
 
-## Features
+#  Model Training
 
-The Streamlit application provides:
+To train the models:
 
-###  Dataset Dashboard
+```bash
+python train.py
+```
+
+The training script:
+
+1. Loads the dataset
+2. Removes unnecessary columns
+3. Converts numerical data
+4. Separates features and target
+5. Encodes categorical variables
+6. Splits data into training and testing sets
+7. Trains multiple models
+8. Compares performances
+9. Saves the best model
+
+Output:
+
+```
+model.pkl
+```
+
+---
+
+#  Streamlit Application
+
+Run the application:
+
+```bash
+streamlit run app.py
+```
+
+The application provides:
+
+## Dataset Dashboard
 
 Displays:
 
-- Total number of customers
+- Number of customers
 - Churn rate
-- Churn distribution chart
+- Churn distribution
 
+## Model Evaluation
 
-### Model Evaluation
-
-Shows:
+Displays:
 
 - Accuracy
 - Precision
@@ -177,21 +220,20 @@ Shows:
 - F1 Score
 - Confusion Matrix
 
+## Customer Prediction
 
-### Customer Prediction
-
-Users can enter customer information:
+Users can enter:
 
 - Gender
-- Senior citizen status
+- Senior Citizen
 - Partner
 - Dependents
 - Tenure
-- Monthly charges
-- Total charges
-- Contract type
-- Internet service
-- Payment method
+- Monthly Charges
+- Total Charges
+- Contract
+- Internet Service
+- Payment Method
 
 
 The application predicts:
@@ -208,7 +250,7 @@ or
 
 ---
 
-## Installation
+# Installation
 
 Clone the repository:
 
@@ -216,7 +258,7 @@ Clone the repository:
 git clone https://github.com/yourusername/CUSTOMER-CHURN-PREDICTION.git
 ```
 
-Move into the project folder:
+Go to the project folder:
 
 ```bash
 cd CUSTOMER-CHURN-PREDICTION
@@ -230,46 +272,9 @@ pip install -r requirements.txt
 
 ---
 
-## Training the Model
+# Example Prediction
 
-Run:
-
-```bash
-python train.py
-```
-
-The script will:
-
-- Load the dataset
-- Clean the data
-- Train multiple models
-- Compare results
-- Save the best model
-
-
-Output:
-
-```
-model.pkl
-```
-
----
-
-##  Running the Application
-
-Start Streamlit:
-
-```bash
-streamlit run app.py
-```
-
-The application will open in your browser.
-
----
-
-##  Model Prediction Example
-
-Example input:
+Example customer:
 
 ```
 Tenure: 12 months
@@ -278,7 +283,7 @@ Contract: Month-to-month
 Internet Service: DSL
 ```
 
-Output:
+Prediction:
 
 ```
 Customer will stay
@@ -286,18 +291,19 @@ Customer will stay
 
 ---
 
-## Future Improvements
+# Future Improvements
 
 Possible improvements:
 
 - Hyperparameter tuning
-- Better handling of class imbalance
-- More Machine Learning algorithms
-- Interactive dashboards
-- Model deployment online
+- Improve churn class detection
+- Add more Machine Learning algorithms
+- Improve UI design
+- Deploy online
+- Add automatic model retraining
 
 ---
 
-## Author
+# Author
 
 Mariem

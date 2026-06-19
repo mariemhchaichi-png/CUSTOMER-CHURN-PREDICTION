@@ -1,12 +1,27 @@
-Customer Churn Prediction
 
 Best Model:
 Logistic Regression
 
+
 Accuracy:
 78.46%
 
+
+Precision:
+61.49%
+
+
+Recall:
+50.80%
+
+
+F1 Score:
+55.64%
+
+
 Tested Models:
+
 - Logistic Regression
 - Random Forest
 - Decision Tree
+

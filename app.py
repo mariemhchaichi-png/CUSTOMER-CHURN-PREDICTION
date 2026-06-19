@@ -81,12 +81,12 @@ with st.sidebar:
 # -------------------------
 
 st.title(
-    "🤖 Customer Churn Prediction"
+    " Customer Churn Prediction"
 )
 
 
 st.subheader(
-    "📊 Dataset Overview"
+    "Dataset Overview"
 )
 
 
@@ -122,7 +122,7 @@ with col2:
 # -------------------------
 
 st.subheader(
-    "📈 Churn Distribution"
+    "Churn Distribution"
 )
 
 
@@ -156,12 +156,13 @@ st.write(
 )
 
 
+
 # -------------------------
 # Customer information
 # -------------------------
 
 st.subheader(
-    "👤 Customer Information"
+    "Customer Information"
 )
 
 
@@ -296,7 +297,7 @@ if st.button(
 
 
     st.subheader(
-        "📊 Prediction Result"
+        " Prediction Result"
     )
 
 
@@ -315,7 +316,7 @@ if st.button(
 
 
     st.subheader(
-        "🤖 Model Confidence"
+        "Model Confidence"
     )
 
 
